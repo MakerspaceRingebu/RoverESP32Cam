@@ -45,15 +45,19 @@ void setup() {
 }
 
 int i = 0;
+long _lastSendTime = millis();
+const long TimeBetweenSend = 100;
 void loop() {
     webServer->Update();
 
 
-    if(cameraReader->IsRunning() && cameraReader->HasNewFrame()){
+    if(cameraReader->IsRunning() && cameraReader->HasNewFrame() && _lastSendTime + TimeBetweenSend < millis()){
         char * frame = nullptr;
         int length = cameraReader->GetFrame(frame);
         webServer->SendToAllClientsWithPage("image/jpeg", "/stream", frame, length);
         delete[] frame;
+
+        _lastSendTime = millis();
     }
 
     if(i == 100){

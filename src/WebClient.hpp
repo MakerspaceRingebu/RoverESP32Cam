@@ -22,6 +22,9 @@ class WebClient{
         String GetRequestedPage();
         void SendStream(String contentType, char * body, int size);
 
+        void SendBody(String body);
+        void SendBody(char * body, int length);
+
     private:
         WiFiClient _client;
         unsigned long _connectTime;
@@ -39,8 +42,7 @@ class WebClient{
         void ProcessHTTPRequestHeader();
 
         void SendHeader(int responseCode, String contentType, bool connectionClose);
-        void SendBody(String body);
-        void SendBody(char * body, int length);
+
 };
 
 WebClient::WebClient(WiFiClient client) : _client(client){
@@ -89,6 +91,10 @@ void WebClient::ProcessResponse(){
     }
     if(requestPage.equals("/streamdemo")){
         SendHeader(200, "multipart/x-mixed-replace", true);
+        return;
+    }
+    if(requestPage.startsWith("/servo/")){
+        SendHeader(200, "text/html", false);
         return;
     }
 

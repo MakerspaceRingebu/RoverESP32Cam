@@ -16,10 +16,11 @@ class WebServer{
         ~WebServer();
         void Update();
 
-        void SendToAllClientsWithPage(String contentType, String requestedPage, char * body, int size);
+    protected:
+        std::vector<WebClient*> _clients;
+
     private:
         WiFiServer * _wifiServer;
-        std::vector<WebClient*> _clients;
 
         void AcceptNewClients();
         void RemoveDeadClients();
@@ -41,24 +42,6 @@ void WebServer::Update(){
     HandleClients();
 }
 
-void WebServer::SendToAllClientsWithPage(String contentType, String requestedPage, char * body, int size){
-    if(size < 0)
-        return;
-
-    for(int i = _clients.size() - 1 ; i >= 0 ; i--){
-        if(_clients[i]->GetRequestedPage().equals(requestedPage)){
-            Serial.print("Sending stream: ");
-            Serial.println(size);
-
-/*
-            for(int i = 0 ; i < size ; i++){
-                Serial.print(body[i]);
-            }*/
-
-            _clients[i]->SendStream(contentType, body, size);
-        }
-    }
-}
 
 void WebServer::AcceptNewClients(){
     while(true){

@@ -93,7 +93,7 @@ void WebClient::ProcessResponse(){
         SendHeader(200, "multipart/x-mixed-replace", true);
         return;
     }
-    if(requestPage.startsWith("/servo/")){
+    if(requestPage.startsWith("/servo")){
         SendHeader(200, "text/html", false);
         return;
     }

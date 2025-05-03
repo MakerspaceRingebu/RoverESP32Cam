@@ -28,9 +28,9 @@ void ServoWebServer::HandleCommand(WebClient * client, String servoName, String 
     ServoWrapper* selectedServo = nullptr;
     bool add;
 
-    if (servoName == "A") {
+    if (servoName == "a") {
         selectedServo = &_servoA;
-    } else if (servoName == "B") {
+    } else if (servoName == "b") {
         selectedServo = &_servoB;
     } else {
         client->SendBody("Unknown servo (expected A or B)");
@@ -68,14 +68,14 @@ void ServoWebServer::HandleClient(WebClient * client){
     //URL format: /servo/{servoName}/{Set/Add}/{AngleDegrees}
     //Example request: /servo/A/Set/90
     if(requestedPage.startsWith("/servo/")){
-        const int expectedParts = 3;
+        const int expectedParts = 4;
         String parts[expectedParts];
         int partCount = SplitPath(requestedPage, parts, expectedParts);
 
         if(partCount < expectedParts){
             client->SendBody("Too few parameters");
         }else{
-            HandleCommand(client, parts[0], parts[1], parts[2]);
+            HandleCommand(client, parts[1], parts[2], parts[3]);
         }
 
     }else{

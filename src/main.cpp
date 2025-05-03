@@ -58,7 +58,7 @@ void loop() {
     servoA.Update();
     servoB.Update();
 
-    servoWebServer->Update();
+    servoWebServer->UpdateServo();
     cameraWebServer->Update();
 
 

@@ -8,7 +8,7 @@ class ServoWebServer : public WebServer{
     public:
         ServoWebServer(int port, ServoWrapper servoA, ServoWrapper servoB);
 
-        void Update();
+        void UpdateServo();
 
     private:
         ServoWrapper _servoA;
@@ -47,6 +47,13 @@ void ServoWebServer::HandleCommand(WebClient * client, String servoName, String 
     }
 
     int angleValue = angle.toInt();
+
+    if(add){
+        client->SendBody("Adding angle to servo");
+    }else{
+        client->SendBody("Setting servo");
+    }
+
     
     if(add){
         selectedServo->AddAngle(angleValue);
@@ -61,8 +68,6 @@ void ServoWebServer::HandleClient(WebClient * client){
     //URL format: /servo/{servoName}/{Set/Add}/{AngleDegrees}
     //Example request: /servo/A/Set/90
     if(requestedPage.startsWith("/servo/")){
-        client->SendBody("Servo!");
-
         const int expectedParts = 3;
         String parts[expectedParts];
         int partCount = SplitPath(requestedPage, parts, expectedParts);
@@ -91,8 +96,8 @@ int ServoWebServer::SplitPath(const String& path, String* parts, int maxParts) {
     return partCount;
 }
 
-void ServoWebServer::Update(){
-    WebServer::Update();
+void ServoWebServer::UpdateServo(){
+    Update();
     
     for(int i = _clients.size() - 1 ; i >= 0 ; i--){
         HandleClient(_clients[i]);

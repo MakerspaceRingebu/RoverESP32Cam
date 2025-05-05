@@ -18,8 +18,8 @@ ServoWebServer * servoWebServer;
 
 CameraReader * cameraReader;
 
-ServoWrapper servoA(7);
-ServoWrapper servoB(6);
+ServoWrapper servoA(14);
+ServoWrapper servoB(15);
 
 const int ledPin = 4;
 
@@ -44,6 +44,9 @@ void setup() {
     Serial.println("WiFi connected.");
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
+
+    ESP32PWM::allocateTimer(2);
+    ESP32PWM::allocateTimer(3);
 
     servoWebServer = new ServoWebServer(81, servoA, servoB);
     cameraWebServer = new CameraWebServer(80);

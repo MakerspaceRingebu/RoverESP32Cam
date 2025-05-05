@@ -33,7 +33,7 @@ void ServoWebServer::HandleCommand(WebClient * client, String servoName, String 
     } else if (servoName == "b") {
         selectedServo = &_servoB;
     } else {
-        client->SendBody("Unknown servo (expected A or B)");
+        client->SendBody("Unknown servo (expected a or b)");
         return;
     }
 
@@ -50,14 +50,9 @@ void ServoWebServer::HandleCommand(WebClient * client, String servoName, String 
 
     if(add){
         client->SendBody("Adding angle to servo");
-    }else{
-        client->SendBody("Setting servo");
-    }
-
-    
-    if(add){
         selectedServo->AddAngle(angleValue);
     }else{
+        client->SendBody("Setting servo");
         selectedServo->SetAngle(angleValue);
     }
 }

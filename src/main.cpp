@@ -14,12 +14,12 @@ const char* ssid = "MakerRover";
 const char* password = "makerrover";
 
 CameraWebServer * cameraWebServer;
-ServoWebServer * servoWebServer;
+//ServoWebServer * servoWebServer;
 
 CameraReader * cameraReader;
 
-ServoWrapper servoA(14);
-ServoWrapper servoB(15);
+//ServoWrapper servoA(14);
+//ServoWrapper servoB(15);
 
 const int ledPin = 4;
 
@@ -45,7 +45,7 @@ void setup() {
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
 
-    servoWebServer = new ServoWebServer(81, servoA, servoB);
+    //servoWebServer = new ServoWebServer(81, servoA, servoB);
     cameraWebServer = new CameraWebServer(80);
 
     cameraReader = new CameraReader();
@@ -55,10 +55,10 @@ int i = 0;
 long _lastSendTime = millis();
 const long TimeBetweenSend = 100;
 void loop() {
-    servoA.Update();
-    servoB.Update();
+    // servoA.Update();
+    // servoB.Update();
 
-    servoWebServer->UpdateServo();
+    // servoWebServer->UpdateServo();
     cameraWebServer->Update();
 
 

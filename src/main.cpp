@@ -45,9 +45,6 @@ void setup() {
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
 
-    ESP32PWM::allocateTimer(2);
-    ESP32PWM::allocateTimer(3);
-
     servoWebServer = new ServoWebServer(81, servoA, servoB);
     cameraWebServer = new CameraWebServer(80);
 
